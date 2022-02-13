@@ -1,0 +1,10 @@
+.vscode
+.DS_Store
+*.log
+*.css.d.ts
+build/
+lib/
+node_modules/
+manifest.json
+tsconfig.tsbuildinfo
+

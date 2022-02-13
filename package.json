@@ -1,0 +1,71 @@
+{
+	"name": "@alexwidua/create-figma-plugin-components",
+	"version": "0.1.0",
+	"publishConfig": {
+		"access": "public"
+	},
+	"description": "Custom components to be used with the create-figma-plugin toolkit.",
+	"type": "module",
+	"engines": {
+		"node": ">=14"
+	},
+	"files": [
+		"lib"
+	],
+	"exports": "./lib/index.js",
+	"main": "./lib/index.js",
+	"dependencies": {
+		"@create-figma-plugin/ui": "^1.8.3",
+		"@create-figma-plugin/utilities": "^1.8.3",
+		"@react-spring/web": "^9.4.2",
+		"@use-gesture/react": "^10.2.5",
+		"preact": "^10"
+	},
+	"devDependencies": {
+		"@create-figma-plugin/build": "^1.8.3",
+		"@create-figma-plugin/tsconfig": "^1.8.3",
+		"@figma/plugin-typings": "1.42.1",
+		"@types/fs-extra": "^9.0.13",
+		"@types/node": "^17.0.17",
+		"@types/react": "^17.0.39",
+		"copyfiles": "^2.4.1",
+		"fs-extra": "^10.0.0",
+		"globby": "^13.1.1",
+		"rimraf": "^3.0.2",
+		"stylelint-config-idiomatic-order": "^8.1.0",
+		"tsm": "^2.2.1",
+		"typescript": "^4"
+	},
+	"peerDependencies": {
+		"preact": "^10",
+		"@create-figma-plugin/ui": "^1.8.3",
+		"@create-figma-plugin/utilities": "^1.8.3"
+	},
+	"scripts": {
+		"build-plugin": "build-figma-plugin --typecheck --minify",
+		"watch-plugin": "build-figma-plugin --typecheck --watch",
+		"build-lib": "yarn run clean && yarn run generate-index-ts && tsc --build && node --loader tsm scripts/add-js-extension-to-relative-module-paths.ts && yarn run copy-css",
+		"generate-index-ts": "node --loader tsm scripts/generate-index-ts.ts src/components/**/*.{ts,tsx}",
+		"copy-css": "copyfiles -u 1 src/**/*.css lib",
+		"clean": "rimraf lib src/**/*.css.d.ts tsconfig.tsbuildinfo"
+	},
+	"sideEffects": false,
+	"stylelint": {
+		"extends": "stylelint-config-idiomatic-order"
+	},
+	"figma-plugin": {
+		"editorType": [
+			"figma"
+		],
+		"id": "create-figma-plugin-components",
+		"name": "create-figma-plugin-components",
+		"main": "src/plugin/main.ts",
+		"ui": "src/plugin/ui.tsx"
+	},
+	"license": "MIT",
+	"author": "Alex Widua",
+	"repository": {
+		"type": "git",
+		"url": "git://github.com/alexwidua/create-figma-plugin-components"
+	}
+}

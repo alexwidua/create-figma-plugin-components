@@ -1,0 +1,23 @@
+{
+	"compilerOptions": {
+		"composite": true,
+		"declaration": true,
+		"declarationMap": true,
+		"esModuleInterop": true,
+		"module": "ES2020",
+		"moduleResolution": "Node",
+		"removeComments": true,
+		"sourceMap": true,
+		"strict": true,
+		"target": "ES2020",
+		"typeRoots": ["node_modules/@figma", "node_modules/@types"],
+		"jsx": "react",
+		"jsxFactory": "h",
+		"lib": ["DOM", "ES2020"],
+		"outDir": "lib",
+		"rootDir": "src",
+		"skipLibCheck": true
+	},
+	"include": ["src/**/*.ts", "src/**/*.tsx"],
+	"exclude": ["src/plugin"]
+}
