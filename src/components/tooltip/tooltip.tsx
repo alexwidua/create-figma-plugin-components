@@ -26,10 +26,11 @@ export interface TooltipProps {
 export function Tooltip({
 	value,
 	alignment = 'top',
-	delay = 0.2
+	delay = 0.2,
+	...rest
 }: TooltipProps) {
 	return (
-		<span className={styles.tooltip}>
+		<span className={styles.tooltip} {...rest}>
 			{value.text}
 			<span
 				className={createClassName([styles.text, styles[alignment]])}
