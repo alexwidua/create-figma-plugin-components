@@ -21,21 +21,23 @@ function Plugin() {
 	const [panelOpen, setPanelOpen] = useState(false)
 
 	return (
-		<div ref={containerRef} style={{ height: '100%', width: '100%' }}>
+		<div
+			ref={containerRef}
+			style={{ height: '100%', width: '100%', overflow: 'hidden' }}>
 			<Panel
 				anchorRef={buttonRef}
 				boundsRef={containerRef}
 				onClose={() => setPanelOpen(false)}
+				anchorAlign="RIGHT"
 				open={panelOpen}>
-				test
+				<div style={{ background: 'red', width: 200 }} />
 			</Panel>
 			<div
 				ref={buttonRef}
 				style={{
-					border: '1px solid red',
-					bottom: '50%',
 					position: 'absolute',
-					right: '50%',
+					bottom: '50%',
+					right: '10%',
 					transform: 'translate3d(50%,50%,0)'
 				}}>
 				<Button onClick={() => setPanelOpen((prev) => !prev)}>

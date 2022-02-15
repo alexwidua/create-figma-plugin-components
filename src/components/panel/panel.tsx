@@ -2,17 +2,25 @@ import { h, ComponentChildren, RefObject } from 'preact'
 import { useState, useEffect, useRef } from 'preact/hooks'
 import { useDrag } from '@use-gesture/react'
 import { useSpring, animated } from '@react-spring/web'
-import { Text, IconButton, IconCross32 } from '@create-figma-plugin/ui'
+import {
+	createClassName,
+	Text,
+	IconButton,
+	IconCross32
+} from '@create-figma-plugin/ui'
+import { CSSProperties } from 'react'
 import styles from './panel.css'
 
-interface PanelProps {
+export interface PanelProps {
 	open: boolean
 	title?: string
 	children: ComponentChildren
 	boundsRef: RefObject<HTMLDivElement>
 	anchorRef: RefObject<HTMLDivElement>
 	anchorMargin?: number
+	anchorAlign?: 'LEFT' | 'RIGHT'
 	onClose: () => void
+	style?: CSSProperties
 }
 
 export function Panel({
@@ -21,8 +29,10 @@ export function Panel({
 	boundsRef,
 	anchorRef,
 	anchorMargin = 8,
+	anchorAlign = 'LEFT',
 	onClose,
-	children
+	children,
+	...rest
 }: PanelProps) {
 	const panelRef = useRef<HTMLDivElement>(null)
 
@@ -31,11 +41,21 @@ export function Panel({
 	 */
 	useEffect(() => {
 		if (!anchorRef?.current || !panelRef?.current) return
-		const rect = anchorRef.current.getBoundingClientRect()
+		const anchorRect = anchorRef.current.getBoundingClientRect()
 		const panelRect = panelRef.current.getBoundingClientRect()
+
+		const alignXToAnchorLeft =
+			anchorRect.x + panelRect.width - window.innerWidth
+		const alignXToAnchorRight =
+			anchorRect.x + anchorRect.width - window.innerWidth
+		const y = anchorRect.y - window.innerHeight - anchorMargin
+
 		animate.set({
-			x: rect.x + panelRect.width - window.innerWidth,
-			y: rect.y - window.innerHeight - anchorMargin
+			x:
+				anchorAlign === 'LEFT'
+					? alignXToAnchorLeft
+					: alignXToAnchorRight,
+			y
 		})
 	}, [panelRef, open])
 
@@ -84,13 +104,14 @@ export function Panel({
 
 	return (
 		<animated.div
-			className={`
-			${styles.panel} 
-			${open ? styles.open : undefined}
-			`}
+			className={createClassName([
+				styles.panel,
+				open ? styles.open : null
+			])}
 			style={{ x, y }}
 			ref={panelRef}
-			{...drag()}>
+			{...drag()}
+			{...rest}>
 			<div className={styles.titlebar}>
 				<Text bold style={{ marginRight: 'var(--space-extra-small)' }}>
 					{title}
