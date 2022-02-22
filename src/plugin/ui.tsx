@@ -2,8 +2,10 @@ import { Button, render, useWindowResize } from '@create-figma-plugin/ui'
 import { emit } from '@create-figma-plugin/utilities'
 import { h, RefObject } from 'preact'
 import { useRef, useState } from 'preact/hooks'
+import { IconCircleInfo16 } from '@create-figma-plugin/ui'
 
-import { Panel } from './../components/Panel/panel'
+import { Panel } from './../components/panel/panel'
+import { Tooltip } from './../components/tooltip/tooltip'
 
 function Plugin() {
 	function onWindowResize(windowSize: { width: number; height: number }) {
@@ -40,9 +42,16 @@ function Plugin() {
 					right: '10%',
 					transform: 'translate3d(50%,50%,0)'
 				}}>
-				<Button onClick={() => setPanelOpen((prev) => !prev)}>
+				{/* <Button onClick={() => setPanelOpen((prev) => !prev)}>
 					Open Panel
-				</Button>
+				</Button> */}
+				<Tooltip
+					value={{
+						tooltip:
+							'By default, the fill color will be brightened up.',
+						children: <IconCircleInfo16 />
+					}}
+				/>
 			</div>
 		</div>
 	)

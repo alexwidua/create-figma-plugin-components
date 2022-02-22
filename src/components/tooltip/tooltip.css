@@ -16,6 +16,7 @@
 	box-shadow: var(--box-shadow-menu);
 	color: #fff;
 	opacity: 0;
+	pointer-events: none;
 	text-align: center;
 	visibility: hidden;
 }

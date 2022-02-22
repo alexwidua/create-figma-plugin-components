@@ -13,29 +13,31 @@ export type Alignment =
 	| 'bottomLeft'
 
 export type TooltipValue = {
-	text: string
+	tooltip: string
 	children: ComponentChildren
 }
 
 export interface TooltipProps {
 	value: TooltipValue
 	alignment?: Alignment
-	delay: number
+	width?: number
+	delay?: number
 }
 
 export function Tooltip({
 	value,
 	alignment = 'top',
+	width = 96,
 	delay = 0.2,
 	...rest
 }: TooltipProps) {
 	return (
 		<span className={styles.tooltip} {...rest}>
-			{value.text}
+			{value.children}
 			<span
 				className={createClassName([styles.text, styles[alignment]])}
-				style={{ transitionDelay: `${delay}s` }}>
-				{value.children}
+				style={{ transitionDelay: `${delay}s`, width }}>
+				{value.tooltip}
 			</span>
 		</span>
 	)
